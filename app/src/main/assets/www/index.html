@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<title>VoiceChange</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="top">
+  <div class="brand"><span class="logo">◉</span> Voice<b>Change</b></div>
+  <div class="sub" id="tabTitle">Напой — получи трек</div>
+</header>
+
+<main>
+  <!-- ===== Вкладка «Напой» ===== -->
+  <section id="tab-hum" class="tab active">
+    <div class="card hint-card" id="humHint">
+      <div class="hint-title">🎵 Как это работает</div>
+      <div class="hint-text">Нажми на микрофон и напой мелодию: мычи, свисти или пой «ла-ла-ла» 5–30 секунд. Приложение распознает ноты, подберёт аккорды и сыграет трек в выбранном стиле.</div>
+    </div>
+    <div id="humInput"></div>
+
+    <div id="humResult" hidden>
+      <div class="card">
+        <div class="chips info" id="humInfo"></div>
+        <div class="roll-wrap" id="rollWrap"><canvas id="roll"></canvas></div>
+        <div class="legend"><span class="dot you"></span>твоя мелодия <span class="dot ai"></span>продолжение</div>
+      </div>
+
+      <div class="card">
+        <div class="label">Стиль</div>
+        <div class="chips scroll" id="styleChips"></div>
+
+        <div class="controls">
+          <div class="ctl">
+            <div class="label">Темп <span id="bpmVal"></span></div>
+            <input type="range" id="bpm" min="50" max="180" step="1">
+          </div>
+          <div class="ctl tr">
+            <div class="label">Тон</div>
+            <div class="stepper"><button id="trDown">−</button><span id="trVal">0</span><button id="trUp">+</button></div>
+          </div>
+        </div>
+        <label class="switch"><input type="checkbox" id="snap" checked><span></span> Исправлять фальшивые ноты</label>
+      </div>
+
+      <div class="player">
+        <button class="btn big primary" id="humPlay">▶ Играть</button>
+      </div>
+      <div class="row wrap">
+        <button class="btn" id="humCont">✨ Продолжить мелодию</button>
+        <button class="btn ghost" id="humUncont" hidden>↺ Убрать продолжение</button>
+      </div>
+      <div class="row wrap">
+        <button class="btn ghost" id="humWav">💾 Сохранить WAV</button>
+        <button class="btn ghost" id="humMidi">🎼 MIDI</button>
+        <button class="btn ghost" id="humShare">📤 Поделиться</button>
+      </div>
+      <div class="row wrap">
+        <button class="btn ghost" id="humToVoice">🎭 Изменить голос этой записи</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== Вкладка «Голоса» ===== -->
+  <section id="tab-voice" class="tab">
+    <div id="voiceInput"></div>
+    <div class="chips scroll" id="catChips"></div>
+    <div class="grid" id="voiceGrid"></div>
+  </section>
+</main>
+
+<!-- Конструктор -->
+<div class="sheet" id="sheet" hidden>
+  <div class="sheet-body">
+    <div class="sheet-head"><b>🎛 Свой голос</b><button class="x" id="sheetClose">✕</button></div>
+    <div id="sliders"></div>
+    <div class="row wrap toggles" id="toggles"></div>
+    <button class="btn big primary" id="customPlay">▶ Послушать</button>
+  </div>
+</div>
+
+<!-- Плеер голосов -->
+<div class="vbar" id="vbar" hidden>
+  <div class="vb-name" id="vbName"></div>
+  <button class="round" id="vbPlay">⏹</button>
+  <button class="round" id="vbSave">💾</button>
+  <button class="round" id="vbShare">📤</button>
+</div>
+
+<nav class="tabs">
+  <button class="tabbtn active" data-tab="hum"><span>🎵</span>Напой</button>
+  <button class="tabbtn" data-tab="voice"><span>🎭</span>Голоса</button>
+</nav>
+
+<div class="busy" id="busy" hidden><div class="spinner"></div><div id="busyText">Обработка…</div></div>
+<div class="toast" id="toast"></div>
+
+<script src="dsp.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
